@@ -42,6 +42,14 @@ namespace WifiShareTool
 
             this.DataContext = this;
             StartWifiCmd = new DelegateCommand(DoStartOrCloseWifi);
+            this.Closing += MainWindow_Closing;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            wifiIsStarted = !StopWiFi(out string stopWiFiOut);
+            wifiIsStarted = !DisallowWifi(out string disallowWifiOut);
+            wifiIsStarted = !JShareWIFI(false, out string stopJShareWIFIOut);
         }
 
         private void DoStartOrCloseWifi()
