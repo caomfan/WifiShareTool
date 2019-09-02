@@ -1,0 +1,82 @@
+﻿<Window x:Class="WifiShareTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WifiShareTool"
+        mc:Ignorable="d"
+        Title="Wifi共享精灵" Height="315" Width="349" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="mainBtnStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="BG" Background="{TemplateBinding Background}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" CornerRadius="15">
+                            <TextBlock x:Name="Txt" Text="{TemplateBinding Content}"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.95"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Opacity" Value="0.9"/>
+                                <Setter Property="Margin" Value="2 2 0 0" TargetName="Txt"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.9"/>
+                                <Setter Property="Background" Value="#aaa" TargetName="BG"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Window.Resources>
+    <Grid  MouseLeftButtonDown="Grid_MouseDown" MouseMove="Grid_MouseMove" MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+        <Border Margin="10" Background="White" CornerRadius="3">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="-1" Color="Black" Opacity="0.2" BlurRadius="10"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="0 0 0 1"  BorderBrush="#ececec">
+                    <DockPanel>
+                        <Image Source="/Images/wifi.png" HorizontalAlignment="Left" Margin="20 -3 0 0" Height="25"/>
+                        <TextBlock Text="WiFi共享精灵" VerticalAlignment="Center" DockPanel.Dock="Left" FontSize="16" Margin="10 0" Foreground="#182a38"/>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 0">
+                            <Image x:Name="imgMin" MouseLeftButtonUp="ImgMin_MouseLeftButtonUp" Source="/Images/min.png" Cursor="Hand" Margin="10 0" Stretch="None"/>
+                            <Image x:Name="imgClose" MouseLeftButtonUp="ImgClose_MouseLeftButtonUp" Source="/Images/close.png" Cursor="Hand"  Stretch="None"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+                <Grid Grid.Row="1">
+                    <StackPanel>
+                        <Image Source="/Images/wifi2.png" Width="65" Stretch="Uniform" Margin="0 20"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="名称：" Foreground="#808485" VerticalAlignment="Center"/>
+                            <TextBox x:Name="txtWifiName" Text="WiFi共享精灵" Padding="5 0" Width="150" Height="27" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#ececec"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 20">
+                            <TextBlock Text="密码：" Foreground="#808485" VerticalAlignment="Center"/>
+                            <TextBox x:Name="txtWifiPwd" Text="1234567890" Padding="5 0" Width="150" Height="27" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#ececec"/>
+                        </StackPanel>
+                        <Button x:Name="btnStartWifi" Command="{Binding StartWifiCmd}" Content="开启WiFi" Width="120" Height="30" Foreground="White" Style="{StaticResource mainBtnStyle}">
+                            <Button.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="#FF0179FF" Offset="0.004"/>
+                                    <GradientStop Color="#FF322FF8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                    </StackPanel>
+                   
+                </Grid>
+            </Grid>
+        </Border>
+        
+    </Grid>
+</Window>
