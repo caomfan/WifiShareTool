@@ -84,6 +84,16 @@ namespace WifiShareTool
                             return;
                         }
 
+                        wifiIsStarted = IsSupportHostedNetwork();
+                        if (!wifiIsStarted)
+                        {
+                            Dispatcher.Invoke(new Action(() =>
+                            {
+                                MessageBox.Show(this, "当前网卡不支持承载网络！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }));
+                            return;
+                        }
+
                         wifiIsStarted = AllowWiFi(wifiName, wifiPwd, out string allowOut);
                         if (!wifiIsStarted)
                         {
@@ -287,6 +297,12 @@ namespace WifiShareTool
             }
         }
 
+        /// <summary>
+        /// 创建ICS共享
+        /// </summary>
+        /// <param name="isShare"></param>
+        /// <param name="jShareWIFIRet"></param>
+        /// <returns></returns>
         public bool JShareWIFI(bool isShare, out string jShareWIFIRet)
         {
             jShareWIFIRet = "未找到本地网络连接！";
@@ -350,6 +366,11 @@ namespace WifiShareTool
             }
         }
 
+        /// <summary>
+        /// 获取当前上网的网卡
+        /// </summary>
+        /// <param name="port"></param>
+        /// <returns></returns>
         private NetworkInterface getBestInterface(int port = 80)
         {
             IPAddress ip;
@@ -397,6 +418,27 @@ namespace WifiShareTool
             }
             socket.Dispose();
             return null;
+        }
+
+        /// <summary>
+        /// 检测是否支持承载网络
+        /// </summary>
+        /// <returns></returns>
+        private bool IsSupportHostedNetwork()
+        {
+            try
+            {
+                var result = executeCmd("NETSH WLAN SHOW DRIVERS");
+                if (result.IndexOf("支持的承载网络  : 是") > -1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
