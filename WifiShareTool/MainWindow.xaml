@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:WifiShareTool.ViewModel"
         xmlns:local="clr-namespace:WifiShareTool"
-        mc:Ignorable="d"
+        mc:Ignorable="d" DataContext="{Binding Source={x:Static vm:MainVm.Insatnce}}"
         Title="Wifi共享精灵" Height="315" Width="349" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="mainBtnStyle" TargetType="Button">
@@ -58,13 +59,13 @@
                         <Image Source="/Images/wifi2.png" Width="65" Stretch="Uniform" Margin="0 20"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBlock Text="名称：" Foreground="#808485" VerticalAlignment="Center"/>
-                            <TextBox x:Name="txtWifiName" Text="WiFi共享精灵" Padding="5 0" Width="150" Height="27" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#ececec"/>
+                            <TextBox x:Name="txtWifiName" IsEnabled="{Binding WiFiNameEnabled}" Text="{Binding WiFiName,UpdateSourceTrigger=PropertyChanged}" Padding="5 0" Width="150" Height="27" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#ececec"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 20">
                             <TextBlock Text="密码：" Foreground="#808485" VerticalAlignment="Center"/>
-                            <TextBox x:Name="txtWifiPwd" Text="1234567890" Padding="5 0" Width="150" Height="27" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#ececec"/>
+                            <TextBox x:Name="txtWifiPwd" IsEnabled="{Binding WiFiPwdEnabled}" Text="{Binding WiFiPwd,UpdateSourceTrigger=PropertyChanged}" Padding="5 0" Width="150" Height="27" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#ececec"/>
                         </StackPanel>
-                        <Button x:Name="btnStartWifi" Command="{Binding StartWifiCmd}" Content="开启WiFi" Width="120" Height="30" Foreground="White" Style="{StaticResource mainBtnStyle}">
+                        <Button x:Name="btnStartWifi" Command="{Binding StartWifiCmd}" Content="{Binding BtnName}" Width="120" Height="30" Foreground="White" Style="{StaticResource mainBtnStyle}">
                             <Button.Background>
                                 <LinearGradientBrush>
                                     <GradientStop Color="#FF0179FF" Offset="0.004"/>

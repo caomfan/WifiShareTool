@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
-namespace WifiShareTool
+namespace WifiShareTool.Command
 {
     public class DelegateCommand<T> : ICommand
     {
