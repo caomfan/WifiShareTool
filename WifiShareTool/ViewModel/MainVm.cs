@@ -37,9 +37,10 @@ namespace WifiShareTool.ViewModel
             BtnName = "开启WiFi";
             WiFiNameEnabled = true;
             WiFiPwdEnabled = true;
+            StartWifiEnabled = true;
             WiFiName = "WiFi共享精灵";
             WiFiPwd = "1234567890";
-            StartWifiCmd = new DelegateCommand(DoStartOrCloseWifi, () => canStartWifi);
+            StartWifiCmd = new DelegateCommand(DoStartOrCloseWifi);
         }
 
         private string _WiFiName;
@@ -82,6 +83,14 @@ namespace WifiShareTool.ViewModel
             set { _WiFiPwdEnabled = value; RaisePropertyChanged(() => WiFiPwdEnabled); }
         }
 
+        private bool _StartWifiEnabled;
+
+        public bool StartWifiEnabled
+        {
+            get { return _StartWifiEnabled; }
+            set { _StartWifiEnabled = value; RaisePropertyChanged(() => StartWifiEnabled); }
+        }
+
 
         public ICommand StartWifiCmd { get; set; }
 
@@ -92,6 +101,7 @@ namespace WifiShareTool.ViewModel
             if (canStartWifi)
             {
                 canStartWifi = false;
+                StartWifiEnabled = false;
 
                 Task.Factory.StartNew(() =>
                 {
@@ -157,6 +167,7 @@ namespace WifiShareTool.ViewModel
                         canStartWifi = true;
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                             {
+                                StartWifiEnabled = true;
                                 if (wifiIsStarted)
                                 {
                                     BtnName = "关闭WiFi";

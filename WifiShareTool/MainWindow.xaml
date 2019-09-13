@@ -65,7 +65,7 @@
                             <TextBlock Text="密码：" Foreground="#808485" VerticalAlignment="Center"/>
                             <TextBox x:Name="txtWifiPwd" IsEnabled="{Binding WiFiPwdEnabled}" Text="{Binding WiFiPwd,UpdateSourceTrigger=PropertyChanged}" Padding="5 0" Width="150" Height="27" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#ececec"/>
                         </StackPanel>
-                        <Button x:Name="btnStartWifi" Command="{Binding StartWifiCmd}" Content="{Binding BtnName}" Width="120" Height="30" Foreground="White" Style="{StaticResource mainBtnStyle}">
+                        <Button x:Name="btnStartWifi" Command="{Binding StartWifiCmd}" IsEnabled="{Binding StartWifiEnabled}" Content="{Binding BtnName}" Width="120" Height="30" Foreground="White" Style="{StaticResource mainBtnStyle}">
                             <Button.Background>
                                 <LinearGradientBrush>
                                     <GradientStop Color="#FF0179FF" Offset="0.004"/>
