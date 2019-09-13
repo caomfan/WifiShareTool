@@ -10,7 +10,7 @@ using WifiShareTool.Utils;
 
 namespace WifiShareTool.ViewModel
 {
-    public class MainVm:VmBase
+    public class MainVm : VmBase
     {
         private SharWiFiUtils shareWiFi;
         private bool canStartWifi = true;
@@ -39,7 +39,7 @@ namespace WifiShareTool.ViewModel
             WiFiPwdEnabled = true;
             WiFiName = "WiFi共享精灵";
             WiFiPwd = "1234567890";
-            StartWifiCmd = new DelegateCommand(DoStartOrCloseWifi,()=> canStartWifi);
+            StartWifiCmd = new DelegateCommand(DoStartOrCloseWifi, () => canStartWifi);
         }
 
         private string _WiFiName;
@@ -47,7 +47,7 @@ namespace WifiShareTool.ViewModel
         public string WiFiName
         {
             get { return _WiFiName; }
-            set { _WiFiName = value;RaisePropertyChanged(() => WiFiName); }
+            set { _WiFiName = value; RaisePropertyChanged(() => WiFiName); }
         }
 
         private string _WiFiPwd;
@@ -63,7 +63,7 @@ namespace WifiShareTool.ViewModel
         public string BtnName
         {
             get { return _BtnName; }
-            set { _BtnName = value;RaisePropertyChanged(() => BtnName); }
+            set { _BtnName = value; RaisePropertyChanged(() => BtnName); }
         }
 
         private bool _WiFiNameEnabled;
@@ -71,7 +71,7 @@ namespace WifiShareTool.ViewModel
         public bool WiFiNameEnabled
         {
             get { return _WiFiNameEnabled; }
-            set { _WiFiNameEnabled = value;RaisePropertyChanged(() => WiFiNameEnabled); }
+            set { _WiFiNameEnabled = value; RaisePropertyChanged(() => WiFiNameEnabled); }
         }
 
         private bool _WiFiPwdEnabled;
@@ -79,7 +79,7 @@ namespace WifiShareTool.ViewModel
         public bool WiFiPwdEnabled
         {
             get { return _WiFiPwdEnabled; }
-            set { _WiFiPwdEnabled = value;RaisePropertyChanged(() => WiFiPwdEnabled); }
+            set { _WiFiPwdEnabled = value; RaisePropertyChanged(() => WiFiPwdEnabled); }
         }
 
 
@@ -112,20 +112,22 @@ namespace WifiShareTool.ViewModel
                                 MessageBox.Show("WiFi名称不能为空！", "提示");
                                 return;
                             }
-                        }));
 
-                        if (string.IsNullOrWhiteSpace(wifiPwd) || wifiPwd.Length < 8)
-                        {
-                            MessageBox.Show( "WiFi密码不能小于8位！", "提示");
-                            return;
-                        }
+
+                            if (string.IsNullOrWhiteSpace(wifiPwd) || wifiPwd.Length < 8)
+                            {
+                                MessageBox.Show("WiFi密码不能小于8位！", "提示");
+                                return;
+                            }
+
+                        }));
 
                         wifiIsStarted = shareWiFi.AllowWiFi(wifiName, wifiPwd, out string allowOut);
                         if (!wifiIsStarted)
                         {
                             Application.Current.Dispatcher.Invoke(new Action(() =>
                             {
-                                MessageBox.Show( allowOut, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show(allowOut, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                             }));
                             return;
                         }
@@ -134,16 +136,16 @@ namespace WifiShareTool.ViewModel
                         {
                             Application.Current.Dispatcher.Invoke(new Action(() =>
                             {
-                                MessageBox.Show( startWiFiOut, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show(startWiFiOut, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                             }));
                             return;
                         }
-                        wifiIsStarted = shareWiFi. JShareWIFI(true, out string startJShareWIFIOut);
+                        wifiIsStarted = shareWiFi.JShareWIFI(true, out string startJShareWIFIOut);
                         if (!wifiIsStarted)
                         {
                             Application.Current.Dispatcher.Invoke(new Action(() =>
                             {
-                                MessageBox.Show( startJShareWIFIOut, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show(startJShareWIFIOut, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                             }));
                             return;
                         }
@@ -153,25 +155,25 @@ namespace WifiShareTool.ViewModel
                     finally
                     {
                         canStartWifi = true;
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
-                        {
-                            if (wifiIsStarted)
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
                             {
-                                BtnName = "关闭WiFi";
-                                WiFiNameEnabled = false;
-                                WiFiPwdEnabled = false;
+                                if (wifiIsStarted)
+                                {
+                                    BtnName = "关闭WiFi";
+                                    WiFiNameEnabled = false;
+                                    WiFiPwdEnabled = false;
 
-                                BalloonTipNotify?.Invoke("WiFi共享已开启！");
-                            }
-                            else
-                            {
-                                BtnName = "开启WiFi";
-                                wifiIsStarted = false;
-                                WiFiNameEnabled = true;
-                                WiFiPwdEnabled = true;
-                                BalloonTipNotify?.Invoke("WiFi共享已关闭！");
-                            }
-                        }));
+                                    BalloonTipNotify?.Invoke("WiFi共享已开启！");
+                                }
+                                else
+                                {
+                                    BtnName = "开启WiFi";
+                                    wifiIsStarted = false;
+                                    WiFiNameEnabled = true;
+                                    WiFiPwdEnabled = true;
+                                    BalloonTipNotify?.Invoke("WiFi共享已关闭！");
+                                }
+                            }));
                     }
                 });
             }
