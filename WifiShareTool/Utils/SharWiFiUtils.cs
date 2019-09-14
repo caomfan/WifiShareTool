@@ -148,7 +148,7 @@ namespace WifiShareTool.Utils
                 NetworkInterface[] Ninterface = NetworkInterface.GetAllNetworkInterfaces();//确定虚拟网络名称
                 foreach (NetworkInterface IN in Ninterface)
                 {
-                    if (IN.Description == "Microsoft Hosted Network Virtual Adapter")
+                    if (IN.Description.Contains("Microsoft Hosted Network Virtual Adapter")&&IN.OperationalStatus==OperationalStatus.Up)
                     {
                         sharedForConnection = IN.Name;
                         break;
